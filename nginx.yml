@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx
+  labels:
+    app: nginx  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx  
+  template:
+    metadata:      
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: ""
+        name: nginx
+        ports:
+        - containerPort: 8020        
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx
+  labels:
+    app: nginx  
+spec:
+  ports:
+  - name: "8020"
+    port: 8020
+    targetPort: 8020
+    nodePort: 30000 
+  type: LoadBalancer #cause it's external service  
+  selector:
+    app: nginx
+#status:
+  #loadBalancer:
+    #put ingress with ip here
