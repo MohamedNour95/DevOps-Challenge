@@ -4,7 +4,7 @@ metadata:
   name: drkiq  
   labels:
     app: drkiq
-  spec:
+spec:
   replicas: 1
   selector:
     matchLabels:
